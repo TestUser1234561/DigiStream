@@ -1,4 +1,4 @@
-WebSocket = require('ws');
+const WebSocket = require('ws');
 
 class StreamServer {
 	constructor() {
