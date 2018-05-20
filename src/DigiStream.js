@@ -62,7 +62,7 @@ class DigiStream {
 
 	runCommandAsync(command) {
 		return new Promise((resolve) => {
-			cp.exec(command, (error, stdout, stderr) => {
+			cp.exec(command, {cwd: '/home/build'},(error, stdout, stderr) => {
 				if(error) {
 					this.errors++;
 					this.stream.send({error: error})
