@@ -30,7 +30,7 @@ class DigiStream {
 	}
 
 	async parseCommands() {
-		let build_settings = await readSettingsAsync('./test.json');
+		let build_settings = await readSettingsAsync('/home/build/.DigiCI');
 
 		await this.forEachAsync(build_settings);
 
