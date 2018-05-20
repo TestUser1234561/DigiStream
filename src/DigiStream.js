@@ -46,7 +46,7 @@ class DigiStream {
 				history: this.stream.history,
 				status: this.errors ? 3 : 2
 			})
-		})
+		}).then(() => { process.exit() })
 	}
 
 	forEachAsync(build_settings) {
