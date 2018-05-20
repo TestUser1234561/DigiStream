@@ -1,0 +1,8 @@
+{
+  "name": "DigiStream",
+  "version": "0.0.1",
+  "dependencies": {
+    "commander": "^2.15.1",
+    "ws": "^5.1.1"
+  }
+}
