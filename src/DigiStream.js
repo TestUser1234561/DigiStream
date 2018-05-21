@@ -31,7 +31,7 @@ class DigiStream {
 		}).then(() => {
 			this.parseCommands().catch((error) => {
 				this.errors++;
-				this.stream.send({stderr: error});
+				this.stream.send({error: error});
 				this.finishStream();
 			});
 		});
@@ -83,7 +83,7 @@ class DigiStream {
 					this.stream.send({stdout: stdout})
 				}else if(stderr) {
 					this.errors++;
-					this.stream.send({stderr: stderr})
+					this.stream.send({error: stderr})
 				}
 				resolve()
 			})
