@@ -4,11 +4,12 @@ const fs = require('fs');
 const cp = require('child_process');
 
 class DigiStream {
-	constructor(id, stream_id, uuid, endpoint) {
+	constructor(id, stream_id, uuid, ip, endpoint) {
 		this.settings = {
 			id: id,
 			uuid: uuid,
 			stream_id: stream_id,
+			ip: ip,
 			endpoint: endpoint
 		};
 		this.errors = 0;
@@ -24,6 +25,7 @@ class DigiStream {
 			body: JSON.stringify({
 				uuid: uuid,
 				stream_id: stream_id,
+				ip: ip,
 				status: 1
 			})
 		});
