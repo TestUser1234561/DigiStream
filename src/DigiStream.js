@@ -56,7 +56,7 @@ class DigiStream {
 			body: JSON.stringify({
 				uuid: this.settings.uuid,
 				stream_id: this.settings.stream_id,
-				history: this.stream.history,
+				history: JSON.stringify(this.stream.history),
 				status: this.errors ? 3 : 2
 			})
 		}).then(() => { process.exit() })
