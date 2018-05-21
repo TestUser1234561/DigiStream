@@ -40,7 +40,11 @@ class DigiStream {
 	async parseCommands() {
 		let build_settings = await readSettingsAsync('/home/build/.DigiCI');
 
-		await this.forEachAsync(build_settings);
+		await this.asyncForEach(build_settings['do'], async (command) => {
+			await this.runCommandAsync(command);
+		}).catch((error) => {
+			this.stream.send({error: error});
+		});
 
 		this.finishStream()
 	}
@@ -62,20 +66,15 @@ class DigiStream {
 		}).then(() => { process.exit() })
 	}
 
-	forEachAsync(build_settings) {
-		return new Promise((resolve) => {
-			let count = 0;
-			build_settings['do'].forEach(async (command) => {
-				count++;
-				await this.runCommandAsync(command);
-				if(count === build_settings['do'].length) { resolve() }
-			})
-		});
+	async asyncForEach(array, callback) {
+		for (let index = 0; index < array.length; index++) {
+			await callback(array[index], index, array)
+		}
 	}
 
 	runCommandAsync(command) {
 		return new Promise((resolve) => {
-			cp.exec(command, {cwd: '/home/build'},(error, stdout, stderr) => {
+			cp.exec(command, {cwd: '/home/build'}, (error, stdout, stderr) => {
 				if(error) {
 					this.errors++;
 					this.stream.send({error: error})
