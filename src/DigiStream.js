@@ -28,9 +28,13 @@ class DigiStream {
 				ip: ip,
 				status: 1
 			})
+		}).then(() => {
+			this.parseCommands().catch((error) => {
+				this.errors++;
+				this.stream.send({stderr: error});
+				this.finishStream();
+			});
 		});
-
-		this.parseCommands();
 	}
 
 	async parseCommands() {
@@ -38,6 +42,10 @@ class DigiStream {
 
 		await this.forEachAsync(build_settings);
 
+		this.finishStream()
+	}
+
+	finishStream() {
 		fetch(`http://${this.settings.endpoint}/api/repo/${this.settings.id}/stream`, {
 			method: 'PATCH',
 			credentials: 'include',
